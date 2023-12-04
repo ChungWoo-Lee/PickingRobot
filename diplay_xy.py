@@ -3,8 +3,8 @@ import pygame
 from collections import deque
 
 def transform_coordinate(x, y):
-    x = ((x + 4600) / 15)  # x 좌표변환
-    y = ((y + 4600) / 15)  # y 좌표변환
+    x = ((x + 4600) / 15)  # x 좌표 변환
+    y = ((y + 4600) / 15)  # y 좌표 변환
     return int(x), int(y)
 
 ser = serial.Serial('COM6', 115200)
