@@ -1,6 +1,5 @@
 #include <RPLidar.h>
 #define RPLIDAR_MOTOR 3 // The PWM pin for control the speed of RPLIDAR's motor (MOTOCTRL).
-<<<<<<< HEAD
 // Include the AccelStepper Library
 #include <AccelStepper.h>
  
@@ -28,13 +27,10 @@
 AccelStepper stepper1(FULLSTEP, motorPin1, motorPin3, motorPin2, motorPin4);
 AccelStepper stepper2(FULLSTEP, motorPin5, motorPin7, motorPin6, motorPin8);
  
-=======
->>>>>>> bd1668086a8b7498dc639a769edb20fe3073755f
 
 RPLidar lidar;
 
 void setup() {
-<<<<<<< HEAD
   Serial.begin(115200);
   Serial1.begin(115200);  // For RPLidar
   lidar.begin(Serial1);
@@ -57,15 +53,6 @@ void loop() {
   stepper1.run();
   stepper2.run();
   
-=======
-  Serial.begin(230400);
-  Serial1.begin(230400);  // For RPLidar
-  lidar.begin(Serial1);
-  pinMode(RPLIDAR_MOTOR, OUTPUT);  // set pin modes
-}
-
-void loop() {
->>>>>>> bd1668086a8b7498dc639a769edb20fe3073755f
   if (IS_OK(lidar.waitPoint())) {
     float distance = lidar.getCurrentPoint().distance;
     float angle = lidar.getCurrentPoint().angle;  // 0-360 deg
@@ -97,11 +84,7 @@ void printData(float x, float y)
   Serial.print(String(x));
   Serial.print(" ");
   Serial.println(String(y));
-<<<<<<< HEAD
 }
 
 
  
-=======
-}
->>>>>>> bd1668086a8b7498dc639a769edb20fe3073755f
