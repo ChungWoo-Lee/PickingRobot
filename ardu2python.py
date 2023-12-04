@@ -1,9 +1,6 @@
-# (distance, theta) --> (x,y)
-# same coordinate system
-
 import serial
 
-ser = serial.Serial('COM6', 115200)
+ser = serial.Serial('COM10', 115200)
 
 while True:
     if ser.in_waiting > 0:
@@ -12,5 +9,3 @@ while True:
         x = float(x_val)
         y = float(y_val)
         print('x:', x, ' y:', y)
-        
-        
