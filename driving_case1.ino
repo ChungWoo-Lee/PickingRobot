@@ -288,7 +288,7 @@ void loop() {
       stepper2.run();
       Serial.println("while 6000스텝 문 도는 중");
     }
-    left(1200);
+    left(2400);
     while (stepper2.distanceToGo() != 0) {
       stepper1.run();
       stepper2.run();
