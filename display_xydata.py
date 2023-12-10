@@ -3,18 +3,18 @@ import pygame
 from collections import deque
 
 def transform_coordinate(x, y):
-    x = ((x + 10000) / 50)  # x 좌표 변환
-    y = ((y + 10000) / 50)  # y 좌표 변환
+    x = ((x + 4600) / 15)  # x 좌표변환
+    y = ((y + 4600) / 15)  # y 좌표변환
     return int(x), int(y)
 
-ser = serial.Serial('COM6', 230400)
+ser = serial.Serial('COM6', 115200)
 
 # deque를 사용하여 최대 10000개의 데이터만 저장하도록 합니다.
-x_data = deque(maxlen=800)
-y_data = deque(maxlen=800)
+x_data = deque(maxlen=1200)
+y_data = deque(maxlen=1200)
 
 pygame.init()
-win_size = 500
+win_size = 700
 win = pygame.display.set_mode((win_size, win_size))  # Pygame 윈도우를 생성합니다.
 
 while len(x_data) < 10000:  # x_data의 길이가 10000보다 작은 동안 계속 실행합니다.
@@ -36,6 +36,6 @@ while len(x_data) < 10000:  # x_data의 길이가 10000보다 작은 동안 계�
 
             win.fill((0, 0, 0))  # 윈도우를 검은색으로 채웁니다.
             for i in range(len(x_data)):
-                pygame.draw.rect(win, (255, 255, 255), pygame.Rect(x_data[i], y_data[i], 1, 1))  # 점을 찍습니다.
+                pygame.draw.rect(win, (255, 255, 255), pygame.Rect(x_data[i], y_data[i], 2.5, 2.5))  # 점을 찍습니다.
             pygame.display.update()  # 화면을 갱신합니다.
 
