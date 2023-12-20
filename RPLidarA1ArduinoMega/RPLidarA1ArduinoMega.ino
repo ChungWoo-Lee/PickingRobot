@@ -6,7 +6,7 @@ RPLidar lidar;
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200);  // For RPLidar
+  Serial1.begin(115200);
   lidar.begin(Serial1);
   pinMode(RPLIDAR_MOTOR, OUTPUT);  // set pin modes
 }
