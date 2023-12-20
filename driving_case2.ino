@@ -22,9 +22,7 @@ RPLidar lidar;
 AccelStepper stepper1(FULLSTEP, motorPin1, motorPin3, motorPin2, motorPin4);
 AccelStepper stepper2(FULLSTEP, motorPin5, motorPin7, motorPin6, motorPin8);
 
-bool loopBolean = true;
-unsigned long timeStart = 0;
-bool startScanning = true;
+
 
 void setup() {
   Serial.begin(115200);
@@ -67,353 +65,173 @@ void printData(float angle, float distance) {
 
 
 void loop() {
-  unsigned long timeNow = millis();
+  // unsigned long timeNow = millis();
 
-  if (startScanning && timeNow - timeStart < 5000) {
-    if (IS_OK(lidar.waitPoint())) {
-      //perform data processing here...
-      float distance = lidar.getCurrentPoint().distance;
-      float angle = lidar.getCurrentPoint().angle;  // 0-360 deg
+  // if (startScanning && timeNow - timeStart < 5000) {
+  //   if (IS_OK(lidar.waitPoint())) {
+  //     //perform data processing here...
+  //     float distance = lidar.getCurrentPoint().distance;
+  //     float angle = lidar.getCurrentPoint().angle;  // 0-360 deg
 
-      if (lidar.getCurrentPoint().startBit) {
-        // a new scan, display the previous data...
-        printData(angleAtMinDist, minDistance);
-        minDistance = 100000;
-        angleAtMinDist = 0;
-      } else {
-        if (distance > 0 && distance < minDistance) {
-          minDistance = distance;
-          angleAtMinDist = angle;
-        }
-      }
-    } else {
-      analogWrite(RPLIDAR_MOTOR, 0);  //stop the rplidar motor
-      // Try to detect RPLIDAR
-      rplidar_response_device_info_t info;
-      if (IS_OK(lidar.getDeviceInfo(info, 100))) {
-        // Detected
-        lidar.startScan();
-        analogWrite(RPLIDAR_MOTOR, 255);
-        delay(1000);
-      }
-    }
-  } else {
+  //     if (lidar.getCurrentPoint().startBit) {
+  //       // a new scan, display the previous data...
+  //       printData(angleAtMinDist, minDistance);
+  //       minDistance = 100000;
+  //       angleAtMinDist = 0;
+  //     } else {
+  //       if (distance > 0 && distance < minDistance) {
+  //         minDistance = distance;
+  //         angleAtMinDist = angle;
+  //       }
+  //     }
+  //   } else {
+  //     analogWrite(RPLIDAR_MOTOR, 0);  //stop the rplidar motor
+  //     // Try to detect RPLIDAR
+  //     rplidar_response_device_info_t info;
+  //     if (IS_OK(lidar.getDeviceInfo(info, 100))) {
+  //       // Detected
+  //       lidar.startScan();
+  //       analogWrite(RPLIDAR_MOTOR, 255);
+  //       delay(1000);
+  //     }
+  //   }
+  // } else {
 
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
+  for (int i = 0; i < 3; i++) {
+    Serial.println(String(i + 1) + "번째 for문 도는 중");
+
+    // Step 1
+    stepper1.moveTo(stepper1.currentPosition() + 3000);
+    stepper2.moveTo(stepper2.currentPosition() - 3000);
     while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
       stepper1.run();
       stepper2.run();
-      Serial.println("while 12000스텝수 문 도는 중");
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 3000);
+    stepper2.moveTo(stepper2.currentPosition() - 3000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
     }
     right(2300);
     while (stepper1.distanceToGo() != 0) {
       stepper1.run();
       stepper2.run();
-      // Serial.println("while r1 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400 스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r2 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 12000스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l1 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400 스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l2 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 12000스텝 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r3 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400스텝 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r4 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 3000스텝 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l3 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400스텝 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l4 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 12000스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r5 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400 스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r6 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 6000);
-    stepper2.moveTo(stepper2.currentPosition() - 6000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 3000스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l5 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600 스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l6 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 1500스텝 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r7 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600스텝 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r8 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 6000스텝 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l7 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 2400스텝 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l8 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 1500스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r9 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600 스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r10 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 1500스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l9 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600 스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l10 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 1500스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r11 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600 스텝수 문 도는 중");
-    }
-    right(2300);
-    while (stepper1.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while r12 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 12000);
-    stepper2.moveTo(stepper2.currentPosition() - 12000);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 1500스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l11 문 도는 중");
-    }
-    stepper1.moveTo(stepper1.currentPosition() + 2400);
-    stepper2.moveTo(stepper2.currentPosition() - 2400);
-    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while 600 스텝수 문 도는 중");
-    }
-    left(2300);
-    while (stepper2.distanceToGo() != 0) {
-      stepper1.run();
-      stepper2.run();
-      Serial.println("while l12 문 도는 중");
+      // Serial.println("while r2 문 도는 중");
     }
 
-    stepper1.stop();
-    stepper2.stop();
+
+    stepper1.moveTo(stepper1.currentPosition() + 2400);
+    stepper2.moveTo(stepper2.currentPosition() - 2400);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 2400 스텝수 문 도는 중");
+    }
+    right(2300);
+    while (stepper1.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while r2 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 3000);
+    stepper2.moveTo(stepper2.currentPosition() - 3000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 3000);
+    stepper2.moveTo(stepper2.currentPosition() - 3000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    left(2300);
+    while (stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while l1 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 2400);
+    stepper2.moveTo(stepper2.currentPosition() - 2400);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 2400 스텝수 문 도는 중");
+    }
+    left(2300);
   }
- 
+  
+  for (int i = 0; i < 3; i++) {
+    Serial.println(String(i + 1) + "번째 for2문 도는 중");
+
+    // Step 1
+    stepper1.moveTo(stepper1.currentPosition() + 6000);
+    stepper2.moveTo(stepper2.currentPosition() - 6000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 6000);
+    stepper2.moveTo(stepper2.currentPosition() - 6000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    right(2300);
+    while (stepper1.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while r2 문 도는 중");
+    }
+
+
+    stepper1.moveTo(stepper1.currentPosition() + 2400);
+    stepper2.moveTo(stepper2.currentPosition() - 2400);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 2400 스텝수 문 도는 중");
+    }
+    right(2300);
+    while (stepper1.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while r2 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 6000);
+    stepper2.moveTo(stepper2.currentPosition() - 6000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 6000);
+    stepper2.moveTo(stepper2.currentPosition() - 6000);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 12000스텝수 문 도는 중");
+    }
+    left(2300);
+    while (stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while l1 문 도는 중");
+    }
+    stepper1.moveTo(stepper1.currentPosition() + 2400);
+    stepper2.moveTo(stepper2.currentPosition() - 2400);
+    while (stepper1.distanceToGo() != 0 || stepper2.distanceToGo() != 0) {
+      stepper1.run();
+      stepper2.run();
+      // Serial.println("while 2400 스텝수 문 도는 중");
+    }
+    left(2300);
+  }
 }
