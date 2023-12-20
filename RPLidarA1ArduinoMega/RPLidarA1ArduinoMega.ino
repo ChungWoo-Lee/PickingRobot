@@ -26,7 +26,7 @@ AccelStepper stepper2(FULLSTEP, motorPin5, motorPin7, motorPin6, motorPin8);
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200);  // For RPLidar
+  Serial1.begin(115200);
   lidar.begin(Serial1);
   stepper1.setMaxSpeed(1000.0);
   stepper1.setAcceleration(50.0);
