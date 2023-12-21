@@ -1,6 +1,6 @@
 # 마이크로프로세서 과제
-###**Picking Robot**
-cf) 구역 나눌 때 --- 입력하면 됨.
+###**Picking bot**
+
 --- 
 ![Picking_bot_Final]
 (https://github.com/ChungWoo-Lee/PickingRobot/blob/main/Picking_bot_Final.jpg)
