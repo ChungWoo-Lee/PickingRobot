@@ -92,6 +92,7 @@ void setup() {
   pinMode(enb, OUTPUT);
 }
 
+
 void loop() {
   if (IS_OK(lidar.waitPoint())) {
     float distance = lidar.getCurrentPoint().distance;
@@ -117,7 +118,7 @@ void loop() {
         }
         angle_left = angle;
       }
-      else if (angle >= 0 && angle <= 1 && distance < 560){
+      else if (angle >= 0 && angle <= 1 && distance < 570){
         R_Uturn();
         // initialDistance_left = -1;
       }
