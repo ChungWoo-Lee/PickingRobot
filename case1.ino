@@ -67,37 +67,37 @@ void printData(float angle, float distance) {
 
 
 void loop() {
-  // unsigned long timeNow = millis();
+  unsigned long timeNow = millis();
 
-  // if (startScanning && timeNow - timeStart < 5000) {
-  //   if (IS_OK(lidar.waitPoint())) {
-  //     //perform data processing here...
-  //     float distance = lidar.getCurrentPoint().distance;
-  //     float angle = lidar.getCurrentPoint().angle;  // 0-360 deg
+  if (startScanning && timeNow - timeStart < 5000) {
+    if (IS_OK(lidar.waitPoint())) {
+      //perform data processing here...
+      float distance = lidar.getCurrentPoint().distance;
+      float angle = lidar.getCurrentPoint().angle;  // 0-360 deg
 
-  //     if (lidar.getCurrentPoint().startBit) {
-  //       // a new scan, display the previous data...
-  //       printData(angleAtMinDist, minDistance);
-  //       minDistance = 100000;
-  //       angleAtMinDist = 0;
-  //     } else {
-  //       if (distance > 0 && distance < minDistance) {
-  //         minDistance = distance;
-  //         angleAtMinDist = angle;
-  //       }
-  //     }
-  //   } else {
-  //     analogWrite(RPLIDAR_MOTOR, 0);  //stop the rplidar motor
-  //     // Try to detect RPLIDAR
-  //     rplidar_response_device_info_t info;
-  //     if (IS_OK(lidar.getDeviceInfo(info, 100))) {
-  //       // Detected
-  //       lidar.startScan();
-  //       analogWrite(RPLIDAR_MOTOR, 255);
-  //       delay(1000);
-  //     }
-  //   }
-  // } else {
+      if (lidar.getCurrentPoint().startBit) {
+        // a new scan, display the previous data...
+        printData(angleAtMinDist, minDistance);
+        minDistance = 100000;
+        angleAtMinDist = 0;
+      } else {
+        if (distance > 0 && distance < minDistance) {
+          minDistance = distance;
+          angleAtMinDist = angle;
+        }
+      }
+    } else {
+      analogWrite(RPLIDAR_MOTOR, 0);  //stop the rplidar motor
+      // Try to detect RPLIDAR
+      rplidar_response_device_info_t info;
+      if (IS_OK(lidar.getDeviceInfo(info, 100))) {
+        // Detected
+        lidar.startScan();
+        analogWrite(RPLIDAR_MOTOR, 255);
+        delay(1000);
+      }
+    }
+  } else {
 
     stepper1.moveTo(stepper1.currentPosition() + 12000);
     stepper2.moveTo(stepper2.currentPosition() - 12000);
