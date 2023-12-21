@@ -2,25 +2,25 @@
 ###**Picking Robot**
 cf) 구역 나눌 때 --- 입력하면 됨.
 --- 
-![Picking_bot_Final]https://github.com/ChungWoo-Lee/PickingRobot/blob/main/Picking_bot_Final.jpg
+![Picking_bot_Final]
+(https://github.com/ChungWoo-Lee/PickingRobot/blob/main/Picking_bot_Final.jpg)
 
-##프로젝트 소개
---- 
-본 프로젝트는 배드민턴 코트 위에 흩어진 셔틀콕을 수집하는 로봇이다. 특히 레슨 도중 상대 코트에 떨어진 셔틀콕을 수집하는데에 있어 큰 효과를 볼수있을것같다. 
-이상적으로는 코트위를 돌아다니면서 장애물을 회피하며 셔틀콕을 수거하는것이 좋을것같다. 
-이 로봇은 라이다 센서를 통해 코드 내의 장애물의 위치를 파악하고 여러 층의 브러시를 사용하여 셔틀콕을 빨아 올리는 형식으로 동작한다. 빨아올리는 메커니즘은 컨베이어 벨트를 활용한다.
-앞에있는 헤드를 변경하면 다른 스포츠 종목에도 접목시킬 수 있는 범용성을 포함하면 좋을것같다.
---- 
-##시행착오
-*컨베이어 벨트 시스템의 이해 부족. 
-*셔틀콕의 복잡한 형상 때문에 각기 다른 자세로 있는 셔틀콕을 막힘 없이 수거함에 있어 차질을 겪음. 
-*가이드를 최대한 땅에 밀착시키고, 벨트에 일정 간격으로
-붙어있는 혓바닥에 빗살을 내어 막힘이 일어났을 때 셔틀콕이 쉽게 빠져나오게 만들었다.
-*사용한 재료의 한계: 사용했던 재료가 수직수평을 만들기 어려운 재료였다. 특히 전문적인 절단 공구를 쓴게 아니다보니 표면이 거칠해지고 완성도가 떨어지는 경향이 있었다. 
-*이미 세팅되어있는 직각의 물체 등을 이용하여
-최대한 수치에 맞아 떨어지는 디바이스를 만드려고 노력하였다.마스킹테이프로 사전 고정을 한뒤에 정확한 위츠를 잡고 본드를 칠하는것도 좋은 방법이다.
+##Project intro
+---
 
-**개발자 소개**
+the goal of the project is to build a device that collects shuttle cocks that are scattered on the court. such a device will be very helpful especially during lesson time. Ideally, we want the device to avoid any obstacle it encounters during its manuever and collect shuttlecock.
+this will be acheieved through the implementation of Lidar sensor. Lidar will let the device recognize its surroundings and mark the obstacles.
+The device will use a mutiple brush to suck up the shuttlecock on it. the brushes are attached to a conveyer belt.
+it will be advantageous to make a design that allows the device to work not only when playing badminton, but also when playing other sports, such as tennis. This will be acheived by detachable head(conveyer belt)
 --- 
-개발자 소개
+
+
+##Some errors encountered during project
+*lack of knowledge about conveyer belt.
+*difficult to collect shuttlecocks lying with different orientation due to the complex shape they have.
+*this error can be minimized by keeping the guide as close to th ground as possible. triming the brushes also helped the jammed shuttlecock to escape quickly.
+*limit due to the material used: the material used was easy to fabricate, but difficult to have precision. horizontal leveling and vertical leveling cannot be easily acheived as
+it is handcrafted. Witout any usage of professional cutting tools, the surface of the final device had rough surfaces.
+*by using a perpendicular objects, we tried to build the device as precise as we can. hold the material with masking tape prior to glueing them turned out to be a very effective method.
+
 
